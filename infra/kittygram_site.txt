@@ -1,5 +1,0 @@
-ip: 158.160.28.33;
-name_kittygram: https://kittyflu.hopto.org;
-login: yc-user;
-passphrase: NRjeSf
-
