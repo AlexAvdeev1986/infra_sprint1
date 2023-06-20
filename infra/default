@@ -1,7 +1,7 @@
 server {
 
     listen 80;
-    server_name 158.160.24.4 vlad.zapto.org;
+    server_name 158.160.28.33 vlad.zapto.org;
 
     location /api/ {
         proxy_pass http://127.0.0.1:8000;
@@ -32,13 +32,13 @@ server {
 
 
     listen 80;
-    server_name 158.160.24.4 vlad.zapto.org;
+    server_name 158.160.28.33 vlad.zapto.org;
     return 404; # managed by Certbot
 }
 
 
 server {
-    server_name 158.160.24.4 vladkittygram.hopto.org;
+    server_name 158.160.28.33 vladkittygram.hopto.org;
     
     location /api/ {
         proxy_pass http://127.0.0.1:8080;
@@ -74,7 +74,7 @@ server {
 
 
     listen 80;
-    server_name 158.160.24.4 vladkittygram.hopto.org;
+    server_name 158.160.28.33 vladkittygram.hopto.org;
     return 404; # managed by Certbot
 
 
