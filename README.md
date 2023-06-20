@@ -1,17 +1,3 @@
-# Запуск проекта Kittygram на удалённом сервере
-
-Kittygram — социальная сеть для обмена фотографиями любимых питомцев. Это полностью рабочий проект, который состоит из бэкенд-приложения на Django и фронтенд-приложения на React. 
-
-- Можно зарегистрироваться и авторизоваться, добавить нового котика на сайт или изменить существующего. 
-- Есть возможность просмотреть записи других пользователей
-### Технологии
-- Python 3.10
-- Django 3.2.3
-- Django REST Framework 3.12.4
-- Pillow 9.0.0
-- Gunicorn 20.1.0
-- Nginx 1.18.0
-- certbot 2.6.0
 ### Загрузка проекта на удаленный сервер
 
 - В директории .ssh создайте новую директорию для SSH-ключей
@@ -173,7 +159,7 @@ ssh -i путь_до_файла_с_SSH_ключом/название_файла_
     ```
     server {
 
-        server_name vladkittygram.hopto.org;
+        server_name https://alex86kittygram.hopto.org;
 
         location /api/ {
             proxy_pass http://127.0.0.1:8080;
@@ -204,7 +190,7 @@ ssh -i путь_до_файла_с_SSH_ключом/название_файла_
     - Используйте любой сервис, выдающий доменные имена, например No-IP
     - Добавьте доменное имя в настройки Django
     ```
-    ALLOWED_HOSTS = ['xxx.xxx.xxx.xxx', '127.0.0.1', 'localhost', 'vladkittygram.hopto.org']
+    ALLOWED_HOSTS = ['xxx.xxx.xxx.xxx', '127.0.0.1', 'localhost', 'https://alex86kittygram.hopto.org']
     ```
     - Перезапустите Gunicorn
     ```
@@ -214,7 +200,7 @@ ssh -i путь_до_файла_с_SSH_ключом/название_файла_
     ```
         server {
     ...
-        server_name <ваш-ip> vladkittygram.hopto.org;
+        server_name <ваш-ip> https://alex86kittygram.hopto.org;
     ...
     } 
     ```
@@ -249,6 +235,3 @@ git add .
 git commit -m '<комментарий>'
 git push
 ```
-
-### Автор
-Федотов Владислав [GitHub](https://github.com/VladislavFed)
