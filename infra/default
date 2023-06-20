@@ -38,7 +38,7 @@ server {
 
 
 server {
-    server_name 158.160.28.33 vladkittygram.hopto.org;
+    server_name 158.160.28.33 https://alex86kittygram.hopto.org;
     
     location /api/ {
         proxy_pass http://127.0.0.1:8080;
@@ -60,21 +60,21 @@ server {
 
 
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/vladkittygram.hopto.org/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/vladkittygram.hopto.org/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/https://alex86kittygram.hopto.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/https://alex86kittygram.hopto.org/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
 } 
 server {
-    if ($host = vladkittygram.hopto.org) {
+    if ($host = https://alex86kittygram.hopto.org) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
 
     listen 80;
-    server_name 158.160.28.33 vladkittygram.hopto.org;
+    server_name 158.160.28.33 https://alex86kittygram.hopto.org;
     return 404; # managed by Certbot
 
 
