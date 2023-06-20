@@ -34,12 +34,11 @@ ssh -i путь_до_файла_с_SSH_ключом/название_файла_
     - Установите на сервер Git
     - Сгенерируйте SSH ключ для Github
     ```
-    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-    ```
+    ssh -i /home/ea703557/Загрузки/555/yc-ea703557 yc-user@158.160.28.33    ```
     - Cохраните открытый ключ в вашем аккаунте на GitHub.
     - Клонируйте проект на сервер
     ```
-    git clone git@github.com:Ваш_аккаунт/infra_sprint1.git 
+    git clone https://github.com/AlexAvdeev1986/infra_sprint1.git
     ```
 - Запустите бэкенд
     - Установите на сервер интерпретатор Python, менеджер пакетов pip, утилиту для создания виртуального окружения venv
@@ -68,7 +67,7 @@ ssh -i путь_до_файла_с_SSH_ключом/название_файла_
     ```
     - Добавьте в список ALLOWED_HOSTS внешний IP-адрес , адреса 127.0.0.1 и localhost
     ```
-    ALLOWED_HOSTS = ['xxx.xxx.xxx.xxx', '127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost']
     ```
 - Запустите фронтенд
     - Установите на сервер пакетный менеджер npm
