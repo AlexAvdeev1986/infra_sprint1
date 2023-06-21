@@ -1,75 +1,161 @@
-# infra_sprint1
+# Kittygram - социальная сеть на самых минималках для размещение фотографий котиков. Учебный проект Яндекс.Практикум.
 
-Инструкция для серверов с предустановленным python.
-Все комманды делаем без кавычек.
+## Описание проекта
+Проект написан в рамках учебного курса по Python от Яндекс.Практикум.
+Пользователи могут регистрироваться, загружать фотографии своих котов с кратким описанием, и смотреть котиков других пользователей. Основная задача  - обучение деплою проекта на сервер.
 
+## Технологии
 
+ - Python 3.9
+ - Django==3.2.3
+ - djangorestframework==3.12.4
+ - Nginx
+ - gunicorn
+ 
+## Установка проекта на локальный компьютер из репозитория 
+ - Клонировать репозиторий `git clone <адрес вашего репозитория>`
+ - перейти в директорию с клонированным репозиторием
+ - установить виртуальное окружение `python3 -m venv venv`
+ - установить зависимости `pip install -r requirements.txt`
+ - в директории /backend/kittygram_backend/ создать файл .env
+ - в файле .env прописать ваш SECRET_KEY в виде: `SECRET_KEY = '<ваш_ключ>'`
 
- - заходим на удалённый свервер и обновляем пакеты - 'sudo apt update' 
+# Деплой проекта на удаленный сервер
 
- - проверяем версию и наличие git - 'git --version', если его нет, то устанавливаем 
-   'sudo apt install git'
-   
- - клонируем - 'git clone git@github.com:anemiaa1986/infra_sprint1.git'
- 
- - переходим в backend в корне проекта и содаём и активируем вирутальной окружение:
-   'sudo apt install python3-pip python3-venv -y'
-   'python3 -m venv venv'
-   'source venv/bin/activate'
-   'pip install -r requirements.txt'
-   
- - применяем миграции - 'python manage.py migrate'
- 
- - создаём суперпользователя - 'python manage.py createsuperuser'
- 
- - заходим в settings.py в диреектории infra_sprint1/backend/kittygram_backend
-   и меняем/добавляем следующие данные:
-   
-   DEBUG = False   
-   ALLOWED_HOSTS = ['158.160.65.62', '127.0.0.1', 'localhost', 'sprt14kitty.ddns.net']
-   STATIC_URL = 'static_backend'
-   STATIC_ROOT = BASE_DIR / 'static_backend' 
-   MEDIA_ROOT = BASE_DIR / '/var/www/ifra_sprint/media/'
-   
- - в папке /var/www/ifra_sprint/ создать папку media
- 
- - запускаем фронтенд, устанавливаем на сервер пакетный менеджер npm(одной строкой):
-   'curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\'
-   ' sudo apt-get install -y nodejs' и проверяем версию 'npm -v'
-  
- - из дерриктории infra_sprint1/fronted устанавливаем зависимости 'npm i'
- 
- - запускаем unit:
-   'pip install gunicorn==20.1.0'
-   из папки infra в корневой папке  копируем файл gunicorn_kittygram.service в папку /etc/systemd/
-   system/ и запускаем его - 'sudo systemctl start gunicorn_kittygram'
-   добавляем в автозагрузку - 'sudo systemctl enable gunicorn_kittygram'
-   проверяем статус - 'sudo systemctl status gunicorn_kittygram'
-   
- - запускаем Nginx:
-   'sudo apt install nginx -y'
-   'sudo systemctl start nginx'
-   'sudo ufw allow 'Nginx Full''
-   'sudo ufw allow OpenSSH'
-   'sudo ufw enable'
-   проверяем статус 'sudo ufw status'
-   
- - подгружаем фронт:
-   из папки infra_sprint1/frontend - 'npm run build'
-   'sudo cp -r /home/yc-user/infra_sprint1/frontend/build/. /var/www/infra_sprint1/'
-   из папки infra_sprint1/infra/ копируем файл default в папку корня /etc/nginx/sites-enabled/
-   проверяем на ошибки и загружаем 
-   'sudo nginx -t'
-   'sudo systemctl reload nginx'
-   
- - переходим в backend в корне проекта и загружаем статитку для backend
-   'python manage.py collectstatic'
-   переходим корень проекта и копируем файлы 'sudo cp -r infra_sprint1/backend/static_backend/ /var/www/infra_sprint1/'
-   
- - 'sudo reboot' и после перезагрузки северва всё загрудается автоматические.
- 
- - переходи по sprt14kitty.ddns.net;
- 
+## Подключение сервера к аккаунту на GitHub
+- на сервере должен быть установлен Git. Для проверки выполнить `sudo apt update` `git --version`
+- если Git не установлен - установить командой `sudo apt install git`
+- находясь на сервере сгенерировать пару SSH-ключей командой `ssh-keygen`
+- сохранить открытый ключ в вашем аккаунте на GitHub. Для этого вывести ключ в терминал командой `cat .ssh/id_rsa.pub`. Скопировать ключ от символов ssh-rsa, включительно, и до конца. Добавить это ключ к вашему аккаунту на GitHub.
+- клонировать проект с GitHub на сервер: `git clone git@github.com:Ваш_аккаунт/<Имя проекта>.git`
 
- 
- 
+## Запуск backend проекта на сервере
+- Установить пакетный менеджер и утилиту для создания виртуального окружения `sudo apt install python3-pip python3-venv -y`
+- находясь в директории с проектом создать и активировать виртуальное окружение `python3 -m venv venv`  `source venv/bin/activate` 
+- установить зависимости `pip install -r requirements.txt`
+- выполнить миграции `python manage.py migrate`
+- создать суперюзера `python manage.py createsuperuser`
+- отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['<внешний адрес вашего сервера>', '127.0.0.1', 'localhost']
+
+## Запуск frontend проекта на сервере
+- установить на сервер `Node.js`   командами
+`curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\`
+`sudo apt-get install -y nodejs`
+- установить зависимости frontend приложения. Из директории `<ваш проект>/frontend/` выполнить команду: `npm i`
+
+## Установка и запуск Gunicorn
+- при активированном виртуальном окружении проекта установить пакет gunicorn `pip install gunicorn==20.1.0`
+- открыть файл settings.py проекта и установить для константы `DEBUG` значение `False` `DEBUG = False`
+- В директории _/etc/systemd/system/_ создайте файл _gunicorn.service_ `sudo nano /etc/systemd/system/gunicorn.service`  со следующим кодом (без комментариев):
+
+	    [Unit]
+    
+	    Description=gunicorn daemon
+    
+	    After=network.target
+    
+	    [Service]
+    
+	    User=yc-user
+    
+	    WorkingDirectory=/home/<имя пользователя в системе>/<имя проекта>/backend/
+    
+	    ExecStart=/home/<имя пользователя в системе>/<имя проекта>/venv/bin/gunicorn --bind 0.0.0.0:8080 kittygram_backend.wsgi
+    
+	    [Install]
+    
+	    WantedBy=multi-user.target
+
+Чтобы точно узнать путь до Gunicorn можно при активированном виртуальном окружении использовать команду `which gunicorn`
+
+## Установка и настройка Nginx
+
+ - На сервере из любой директории выполнить команду: `sudo apt install nginx -y`
+- Для установки ограничений на открытые порты выполнить по очереди команды: `sudo ufw allow 'Nginx Full'`  `sudo ufw allow OpenSSH`
+- включить файервол `sudo ufw enable`
+	### собрать и разместить статику frontend-приложения.
+- Перейти в директорию _<имя_проекта>/frontend/_  и выполнить команду `npm run build` Результат сохранится в директории ..._/frontend/build/_.  В системную директорию сервера _/var/www/_ скопировать содержимое папки _/frontend/build/_
+- открыть файл конфигурации веб-сервера `sudo nano /etc/nginx/sites-enabled/default` и заменить его содержимое следующим кодом:
+
+    	
+        server {
+    
+	        listen 80;
+	        server_name публичный_ip_вашего_удаленного_сервера;
+        
+	        location / {
+            root   /var/www/<имя проекта>;
+            index  index.html index.htm;
+            try_files $uri /index.html;
+	        }
+    
+	    }
+- проверить корректность конфигурации `sudo nginx -t`
+- перезагрузить конфигурацию Nginx `sudo systemctl reload nginx`
+	### настроить проксирование запросов
+- Открыть файл конфигурации Nginx _/etc/nginx/sites-enabled/default_ и добавить в него ещё один блок `location`
+
+	    server {
+    
+	        listen 80;
+	        server_name публичный_ip_вашего_удаленного_сервера;
+    
+	        location /api/ {
+	            proxy_pass http://127.0.0.1:8080;
+	        }
+	        
+		    location /admin/ {
+			    proxy_pass http://127.0.0.1:8000;
+				}
+			
+	        location / {
+	            root   /var/www/<имя_проекта>;
+	            index  index.html index.htm;
+	            try_files $uri /index.html;
+	        }
+    
+	    }
+
+- Сохранить изменения, проверить и перезагрузить конфигурацию веб-сервера:
+
+	    sudo nginx -t
+	    sudo systemctl reload nginx
+
+	### собрать и настроить статику для backend-приложения.
+- в файле _settings.py_ прописать настройки 
+	
+
+	    STATIC_URL = 'static_backend'
+	    STATIC_ROOT = BASE_DIR / 'static_backend'
+
+- активировать виртуальное окружение проекта, перейти в директорию с файлом _manage.py_ и выполнить команду `python manage.py collectstatic`
+- в директории_<имя_проекта>/backend/_ будет создана директория _static_backend/_ 
+- Скопировать директорию _static_backend/_ в директорию _/var/www/<имя_проекта>/_
+
+## Добавление доменного имени в настройки Django
+- в файле _settings.py_ добавить в список `ALLOWED_HOSTS` доменное имя: 
+	ALLOWED_HOSTS = ['ip_адрес_вашего_сервера', '127.0.0.1', 'localhost', 'ваш-домен'] 
+- сохранить изменения и перезапустить gunicorn `sudo systemctl restart gunicorn`
+- внести изменения в конфигурацию Nginx. Открыть конфигурационный файл командой: `sudo nano /etc/nginx/sites-enabled/default`
+- Добавьте в строку `server_name` выданное вам доменное имя (через пробел, без `< >`):
+
+		server {
+		...
+		    server_name <ваш-ip> <ваш-домен>;
+		...
+		}
+- Проверить конфигурацию `sudo nginx -t` и перезагрузить её командой `sudo systemctl reload nginx`, чтобы изменения вступили в силу.
+
+ ## Получение и настройка SSL-сертификата
+ **Установка certbot**
+ - Зайдите на сервер и последовательно выполните команды:
+
+	    sudo apt install snapd
+	    sudo snap install core; sudo snap refresh core
+	    sudo snap install --classic certbot
+	    sudo ln -s /snap/bin/certbot /usr/bin/certbot
+- запустить certbot и получить SSL-сертификат:
+
+		sudo certbot --nginx
+- сертификат автоматически сохранится на вашем сервере в системной директории _/etc/ssl/_  Также будет автоматически изменена конфигурация Nginx: в файл _/etc/nginx/sites-enabled/default_ добавятся новые настройки и будут прописаны пути к сертификату.
+- перезагрузить конфигурацию Nginx `sudo systemctl reload nginx`
