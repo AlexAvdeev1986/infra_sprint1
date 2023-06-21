@@ -1,13 +1,16 @@
 server {
 
-    listen 80;
-    server_name 158.160.28.33 alex86taski.hopto.org;
-
+    server_name alex86taski.hopto.org;
+    
     location /api/ {
         proxy_pass http://127.0.0.1:8000;
     }
 
     location /admin/ {
+        proxy_pass http://127.0.0.1:8000;
+    }
+
+    location /sentry-debug/ {
         proxy_pass http://127.0.0.1:8000;
     }
 
@@ -17,28 +20,31 @@ server {
         try_files $uri /index.html;
     }
 
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/alex86taski.hopto.org/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/alex86taski.hopto.org/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/alex86taski.hopto.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/alex86taski.hopto.org/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
 }
 server {
     if ($host = alex86taski.hopto.org) {
         return 301 https://$host$request_uri;
-    } # managed by Certbot
+    }
 
 
 
     listen 80;
-    server_name 158.160.28.33 alex86taski.hopto.org;
-    return 404; # managed by Certbot
+    server_name alex86taski.hopto.org;
+    return 404;
+
+
 }
 
+server {    
 
-server {
-    server_name 158.160.28.33 https://alex86kittygram.hopto.org;
+    server_name alex86kittygram.hopto.org;
     
     location /api/ {
         proxy_pass http://127.0.0.1:8080;
@@ -49,33 +55,37 @@ server {
     }
 
     location /media/ {
-        alias /var/www/kittygram/media/;
+        root /var/www/kittygram;
     }
 
+
     location / {
-        root   /var/www/infra_sprint1;
+        root   /var/www/kittygram;
         index  index.html index.htm;
         try_files $uri /index.html;
     }
 
 
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/https://alex86kittygram.hopto.org/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/https://alex86kittygram.hopto.org/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/alex86kittygram.hopto.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/alex86kittygram.hopto.org/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
 } 
+
+
 server {
-    if ($host = https://alex86kittygram.hopto.org) {
+    if ($host = alex86kittygram.hopto.org) {
         return 301 https://$host$request_uri;
-    } # managed by Certbot
+    }
 
+    
 
-
+    server_name alex86kittygram.hopto.org;
     listen 80;
-    server_name 158.160.28.33 https://alex86kittygram.hopto.org;
-    return 404; # managed by Certbot
+    return 404;
 
 
 }
