@@ -1,17 +1,19 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+SERVER_IP = os.environ.get('SERVER_IP')
 
-DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(' ')
+DEBUG = False
+
+ALLOWED_HOSTS = [SERVER_IP, '127.0.0.1', 'localhost', 'batiskaf-kittygram.myftp.org']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -94,11 +96,11 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static_backend/'
+STATIC_URL = 'static_backend'
 STATIC_ROOT = BASE_DIR / 'static_backend'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/kittygram/media/'
+MEDIA_ROOT = '/var/www/kittygram/media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -112,6 +114,6 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 50,
+    'PAGE_SIZE': 10,
 
 }

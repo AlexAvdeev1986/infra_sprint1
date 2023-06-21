@@ -1,5 +1,5 @@
-IP: 158.160.28.33;
-name_taski: https://vlad.zapto.org;
-name_kittygram: https://alex86kittygram.hopto.org;
-login: admin;
-password: admin;
+IP: 158.160.12.94;
+name_taski: https://batiskaf-tasks.hopto.org/ ;
+name_kittygram: https://batiskaf-kittygram.myftp.org/ ;
+login: batiskaf;
+password: encoded; 
