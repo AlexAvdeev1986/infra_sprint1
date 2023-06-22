@@ -16,8 +16,9 @@
  - Клонировать репозиторий `git clone <адрес вашего репозитория>`
  - перейти в директорию с клонированным репозиторием
  - установить виртуальное окружение `python3 -m venv venv`
+ - войти 'cd infra_sprint1'
  - установить зависимости `pip install -r requirements.txt`
- - в директории /backend/kittygram_backend/ создать файл .env
+ - в директории cd /backend/kittygram_backend/ создать файл touch .env
  - в файле .env прописать ваш SECRET_KEY в виде: `SECRET_KEY = '<ваш_ключ>'`
 
 # Деплой проекта на удаленный сервер
@@ -27,7 +28,7 @@
 - если Git не установлен - установить командой `sudo apt install git`
 - находясь на сервере сгенерировать пару SSH-ключей командой `ssh-keygen`
 - сохранить открытый ключ в вашем аккаунте на GitHub. Для этого вывести ключ в терминал командой `cat .ssh/id_rsa.pub`. Скопировать ключ от символов ssh-rsa, включительно, и до конца. Добавить это ключ к вашему аккаунту на GitHub.
-- клонировать проект с GitHub на сервер: `git clone git@github.com:Ваш_аккаунт/<Имя проекта>.git`
+- клонировать проект с GitHub на сервер: `git clone https://github.com/AlexAvdeev1986/infra_sprint1.git`
 
 ## Запуск backend проекта на сервере
 - Установить пакетный менеджер и утилиту для создания виртуального окружения `sudo apt install python3-pip python3-venv -y`
@@ -58,9 +59,9 @@
     
 	    User=yc-user
     
-	    WorkingDirectory=/home/<имя пользователя в системе>/<имя проекта>/backend/
+	    WorkingDirectory=/home/yc-user/infra_sprint1/backend/
     
-	    ExecStart=/home/<имя пользователя в системе>/<имя проекта>/venv/bin/gunicorn --bind 0.0.0.0:8080 kittygram_backend.wsgi
+	    ExecStart=/home/yc-user/infra_sprint1/venv/bin/gunicorn --bind 0.0.0.0:8080 kittygram_backend.wsgi
     
 	    [Install]
     
@@ -93,12 +94,12 @@
 - проверить корректность конфигурации `sudo nginx -t`
 - перезагрузить конфигурацию Nginx `sudo systemctl reload nginx`
 	### настроить проксирование запросов
-- Открыть файл конфигурации Nginx _/etc/nginx/sites-enabled/default_ и добавить в него ещё один блок `location`
+- Открыть файл конфигурации Nginx 'sudo nano /etc/nginx/sites-enabled/default' и добавить в него ещё один блок `location`
 
 	    server {
     
 	        listen 80;
-	        server_name публичный_ip_вашего_удаленного_сервера;
+	        server_name 158.160.72.135 romainkashichkin.ddns.net;
     
 	        location /api/ {
 	            proxy_pass http://127.0.0.1:8080;
@@ -109,7 +110,7 @@
 				}
 			
 	        location / {
-	            root   /var/www/<имя_проекта>;
+	            root   /var/www/kittygram;
 	            index  index.html index.htm;
 	            try_files $uri /index.html;
 	        }
@@ -141,7 +142,7 @@
 
 		server {
 		...
-		    server_name <ваш-ip> <ваш-домен>;
+		     server_name 158.160.72.135 romainkashichkin.ddns.net;
 		...
 		}
 - Проверить конфигурацию `sudo nginx -t` и перезагрузить её командой `sudo systemctl reload nginx`, чтобы изменения вступили в силу.
