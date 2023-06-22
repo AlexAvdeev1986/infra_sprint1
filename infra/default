@@ -1,5 +1,5 @@
 server {
-    server_name 158.160.72.135 alex86taski.hopto.org;
+    server_name 158.160.28.33 alex86taski.hopto.org;
 
     location /api/ {
         proxy_pass http://127.0.0.1:8000;
@@ -31,13 +31,13 @@ server {
 
 
     listen 80;
-    server_name 158.160.72.135 alex86taski.hopto.org;
+    server_name 158.160.28.33 alex86taski.hopto.org;
     return 404; # managed by Certbot
 
 
 }
 server {
-    server_name 158.160.72.135 alex86kittygram.hopto.org;
+    server_name 158.160.28.33 alex86kittygram.hopto.org;
 
     location /media/ {
         root /var/www/kittygram;
@@ -74,7 +74,7 @@ server {
 
 
     listen 80;
-    server_name 158.160.72.135 alex86kittygram.hopto.org;
+    server_name 158.160.28.33 alex86kittygram.hopto.org;
     return 404; # managed by Certbot
 
 
