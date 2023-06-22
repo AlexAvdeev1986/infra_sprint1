@@ -16,10 +16,10 @@
  - Клонировать репозиторий `git clone https://github.com/AlexAvdeev1986/infra_sprint1.git`
  - перейти в директорию с клонированным репозиторием
  - установить виртуальное окружение `python3 -m venv venv`
- - войти 'cd infra_sprint1'
+ - войти `cd infra_sprint1`
  - установить зависимости `pip install -r requirements.txt`
- - в директории cd /backend/kittygram_backend/ создать файл touch .env
- - в файле nano .env прописать ваш SECRET_KEY в виде: SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+ - в директории `cd /backend/kittygram_backend/` создать файл touch .env
+ - в файле `nano .env` прописать ваш SECRET_KEY в виде: SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
 
 # Деплой проекта на удаленный сервер
 
@@ -28,20 +28,20 @@
 - если Git не установлен - установить командой `sudo apt install git`
 - находясь на сервере сгенерировать пару SSH-ключей командой `ssh-keygen`
 - сохранить открытый ключ в вашем аккаунте на GitHub. Для этого вывести ключ в терминал командой `cat .ssh/id_rsa.pub`. Скопировать ключ от символов ssh-rsa, включительно, и до конца. Добавить это ключ к вашему аккаунту на GitHub.
-- ssh -i /home/ea703557/Загрузки/555/yc-ea703557 yc-user@158.160.28.33
+- `ssh -i /home/ea703557/Загрузки/555/yc-ea703557 yc-user@158.160.28.33`
 -
 - клонировать проект с GitHub на сервер: `git clone https://github.com/AlexAvdeev1986/infra_sprint1.git`
 
 ## Запуск backend проекта на сервере
 - 
 - Установить пакетный менеджер и утилиту для создания виртуального окружения `sudo apt install python3-pip python3-venv -y`
-- cd ~/infra_sprint1 
+- `cd ~/infra_sprint1` 
 - находясь в директории с проектом создать и активировать виртуальное окружение `python3 -m venv venv`  `source venv/bin/activate` 
 - установить зависимости `pip install -r requirements.txt`
-- cd backend/kittygram_backend/
-- touch .env
-- nano .env вставить SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
-- cd ~/infra_sprint1/backend
+- `cd backend/kittygram_backend/`
+- `touch .env`
+- `nano .env` вставить SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+- `cd ~/infra_sprint1/backend`
 - выполнить миграции `python manage.py migrate`
 - создать суперюзера `python manage.py createsuperuser`
 - отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alex86kittygram.hopto.org']
@@ -50,7 +50,7 @@
 - установить на сервер `Node.js`   командами
 `curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\`
 `sudo apt-get install -y nodejs`
-- установить зависимости frontend приложения. Из директории `cd ~/infra_sprint1/frontend/` выполнить команду: 'sudo apt install npm' `npm i` 'npm audit' 'npm audit fix --force'
+- установить зависимости frontend приложения. Из директории `cd ~/infra_sprint1/frontend/` выполнить команду: 'sudo apt install npm' `npm i` `npm audit' 'npm audit fix --force`
 
 ## Установка и запуск Gunicorn
 - при активированном виртуальном окружении проекта установить пакет gunicorn `pip install gunicorn==20.1.0`
@@ -83,7 +83,7 @@
 - Для установки ограничений на открытые порты выполнить по очереди команды: `sudo ufw allow 'Nginx Full'`  `sudo ufw allow OpenSSH`
 - включить файервол `sudo ufw enable`
 	### собрать и разместить статику frontend-приложения.
-- Перейти в директорию 'cd ~/infra_sprint1/frontend/' и выполнить команду `npm run build` Результат сохранится в директории ..._/frontend/build/_.  В системную директорию сервера _/var/www/_ скопировать содержимое папки _/frontend/build/_
+- Перейти в директорию `cd ~/infra_sprint1/frontend/` и выполнить команду `npm run build` Результат сохранится в директории ..._/frontend/build/_.  В системную директорию сервера _/var/www/_ скопировать содержимое папки _/frontend/build/_
 - открыть файл конфигурации веб-сервера `sudo nano /etc/nginx/sites-enabled/default` и заменить его содержимое следующим кодом:
 
     	
@@ -102,7 +102,7 @@
 - проверить корректность конфигурации `sudo nginx -t`
 - перезагрузить конфигурацию Nginx `sudo systemctl reload nginx`
 	### настроить проксирование запросов
-- Открыть файл конфигурации Nginx 'sudo nano /etc/nginx/sites-enabled/default' и добавить в него ещё один блок `location`
+- Открыть файл конфигурации Nginx `sudo nano /etc/nginx/sites-enabled/default` и добавить в него ещё один блок `location`
 
 	    server {
     
@@ -138,7 +138,7 @@
 	    STATIC_ROOT = BASE_DIR / 'static_backend'
 
 
-- cd ~/infra_sprint1/backend/ будет создcdана директория _static_backend/_ 
+- `cd ~/infra_sprint1/backend/` будет создcdана директория _static_backend/_ 
 - активировать виртуальное окружение проекта, перейти в 
 директорию с файлом _manage.py_ и выполнить команду `python3 manage.py collectstatic`
 - в директории 
@@ -167,8 +167,8 @@
 	    sudo snap install core; 
 		sudo snap refresh core
 	    sudo snap install --classic certbot
-	    sudo ln -s /snap/bin/certbot /usr/bin/certbot
-- запустить certbot и получить SSL-сертификат:
+	    `sudo ln -s /snap/bin/certbot /usr/bin/certbot
+- запустить certbot и получить SSL-сертификат`:
 
 		sudo certbot --nginx
 - сертификат автоматически сохранится на вашем сервере в системной директории _/etc/ssl/_  Также будет автоматически изменена конфигурация Nginx: в файл _/etc/nginx/sites-enabled/default_ добавятся новые настройки и будут прописаны пути к сертификату.
