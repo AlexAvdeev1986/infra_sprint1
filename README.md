@@ -19,7 +19,7 @@
  - войти 'cd infra_sprint1'
  - установить зависимости `pip install -r requirements.txt`
  - в директории cd /backend/kittygram_backend/ создать файл touch .env
- - в файле .env прописать ваш SECRET_KEY в виде: SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+ - в файле nano .env прописать ваш SECRET_KEY в виде: SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
 
 # Деплой проекта на удаленный сервер
 
@@ -35,12 +35,13 @@
 ## Запуск backend проекта на сервере
 - 
 - Установить пакетный менеджер и утилиту для создания виртуального окружения `sudo apt install python3-pip python3-venv -y`
-- cd infra_sprint1 
+- cd ~/infra_sprint1 
 - находясь в директории с проектом создать и активировать виртуальное окружение `python3 -m venv venv`  `source venv/bin/activate` 
 - установить зависимости `pip install -r requirements.txt`
-- cd backend 
+- cd backend/kittygram_backend/
 - touch .env
 - nano .env вставить SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+- cd ~/infra_sprint1/backend
 - выполнить миграции `python manage.py migrate`
 - создать суперюзера `python manage.py createsuperuser`
 - отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alex86kittygram.hopto.org']
@@ -49,7 +50,7 @@
 - установить на сервер `Node.js`   командами
 `curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\`
 `sudo apt-get install -y nodejs`
-- установить зависимости frontend приложения. Из директории `cd ~/infra_sprint1/frontend/` выполнить команду: `npm i`
+- установить зависимости frontend приложения. Из директории `cd ~/infra_sprint1/frontend/` выполнить команду: 'sudo apt install npm' `npm i` 'npm audit' 'npm audit fix --force'
 
 ## Установка и запуск Gunicorn
 - при активированном виртуальном окружении проекта установить пакет gunicorn `pip install gunicorn==20.1.0`
@@ -136,13 +137,17 @@
 	    STATIC_URL = 'static_backend'
 	    STATIC_ROOT = BASE_DIR / 'static_backend'
 
-- активировать виртуальное окружение проекта, перейти в директорию с файлом _manage.py_ и выполнить команду `python manage.py collectstatic`
-- в директории cd ~/infra_sprint1/backend/ будет создcdана директория _static_backend/_ 
+
+- cd ~/infra_sprint1/backend/ будет создcdана директория _static_backend/_ 
+- активировать виртуальное окружение проекта, перейти в 
+директорию с файлом _manage.py_ и выполнить команду `python3 manage.py collectstatic`
+- в директории 
 - Скопировать директорию _static_backend/_ в директорию _/var/www/<имя_проекта>/_
 
 ## Добавление доменного имени в настройки Django
 - в файле _settings.py_ добавить в список `ALLOWED_HOSTS` доменное имя: 
 	ALLOWED_HOSTS = ['ip_адрес_вашего_сервера', '127.0.0.1', 'localhost', 'ваш-домен'] 
+	
 - сохранить изменения и перезапустить gunicorn `sudo systemctl restart gunicorn`
 - внести изменения в конфигурацию Nginx. Открыть конфигурационный файл командой: `sudo nano /etc/nginx/sites-enabled/default`
 - Добавьте в строку `server_name` выданное вам доменное имя (через пробел, без `< >`):
@@ -159,7 +164,8 @@
  - Зайдите на сервер и последовательно выполните команды:
 
 	    sudo apt install snapd
-	    sudo snap install core; sudo snap refresh core
+	    sudo snap install core; 
+		sudo snap refresh core
 	    sudo snap install --classic certbot
 	    sudo ln -s /snap/bin/certbot /usr/bin/certbot
 - запустить certbot и получить SSL-сертификат:
