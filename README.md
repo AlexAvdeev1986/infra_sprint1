@@ -13,13 +13,13 @@
  - gunicorn
  
 ## Установка проекта на локальный компьютер из репозитория 
- - Клонировать репозиторий `git clone <адрес вашего репозитория>`
+ - Клонировать репозиторий `git clone https://github.com/AlexAvdeev1986/infra_sprint1.git`
  - перейти в директорию с клонированным репозиторием
  - установить виртуальное окружение `python3 -m venv venv`
  - войти 'cd infra_sprint1'
  - установить зависимости `pip install -r requirements.txt`
  - в директории cd /backend/kittygram_backend/ создать файл touch .env
- - в файле .env прописать ваш SECRET_KEY в виде: `SECRET_KEY = '<ваш_ключ>'`
+ - в файле .env прописать ваш SECRET_KEY в виде: SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
 
 # Деплой проекта на удаленный сервер
 
@@ -28,21 +28,28 @@
 - если Git не установлен - установить командой `sudo apt install git`
 - находясь на сервере сгенерировать пару SSH-ключей командой `ssh-keygen`
 - сохранить открытый ключ в вашем аккаунте на GitHub. Для этого вывести ключ в терминал командой `cat .ssh/id_rsa.pub`. Скопировать ключ от символов ssh-rsa, включительно, и до конца. Добавить это ключ к вашему аккаунту на GitHub.
+- ssh -i /home/ea703557/Загрузки/555/yc-ea703557 yc-user@158.160.28.33
+-
 - клонировать проект с GitHub на сервер: `git clone https://github.com/AlexAvdeev1986/infra_sprint1.git`
 
 ## Запуск backend проекта на сервере
+- 
 - Установить пакетный менеджер и утилиту для создания виртуального окружения `sudo apt install python3-pip python3-venv -y`
+- cd infra_sprint1 
 - находясь в директории с проектом создать и активировать виртуальное окружение `python3 -m venv venv`  `source venv/bin/activate` 
 - установить зависимости `pip install -r requirements.txt`
+- cd backend 
+- touch .env
+- nano .env вставить SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
 - выполнить миграции `python manage.py migrate`
 - создать суперюзера `python manage.py createsuperuser`
-- отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['<внешний адрес вашего сервера>', '127.0.0.1', 'localhost']
+- отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alex86kittygram.hopto.org']
 
 ## Запуск frontend проекта на сервере
 - установить на сервер `Node.js`   командами
 `curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\`
 `sudo apt-get install -y nodejs`
-- установить зависимости frontend приложения. Из директории `<ваш проект>/frontend/` выполнить команду: `npm i`
+- установить зависимости frontend приложения. Из директории `cd ~/infra_sprint1/frontend/` выполнить команду: `npm i`
 
 ## Установка и запуск Gunicorn
 - при активированном виртуальном окружении проекта установить пакет gunicorn `pip install gunicorn==20.1.0`
@@ -75,17 +82,17 @@
 - Для установки ограничений на открытые порты выполнить по очереди команды: `sudo ufw allow 'Nginx Full'`  `sudo ufw allow OpenSSH`
 - включить файервол `sudo ufw enable`
 	### собрать и разместить статику frontend-приложения.
-- Перейти в директорию _<имя_проекта>/frontend/_  и выполнить команду `npm run build` Результат сохранится в директории ..._/frontend/build/_.  В системную директорию сервера _/var/www/_ скопировать содержимое папки _/frontend/build/_
+- Перейти в директорию 'cd ~/infra_sprint1/frontend/' и выполнить команду `npm run build` Результат сохранится в директории ..._/frontend/build/_.  В системную директорию сервера _/var/www/_ скопировать содержимое папки _/frontend/build/_
 - открыть файл конфигурации веб-сервера `sudo nano /etc/nginx/sites-enabled/default` и заменить его содержимое следующим кодом:
 
     	
         server {
     
 	        listen 80;
-	        server_name публичный_ip_вашего_удаленного_сервера;
+	        server_name 158.160.28.33 alex86kittygram.hopto.org;
         
 	        location / {
-            root   /var/www/<имя проекта>;
+            root   /var/www/kittygram;
             index  index.html index.htm;
             try_files $uri /index.html;
 	        }
@@ -99,7 +106,7 @@
 	    server {
     
 	        listen 80;
-	        server_name 158.160.72.135 romainkashichkin.ddns.net;
+	        server_name 158.160.28.33 alex86kittygram.hopto.org;
     
 	        location /api/ {
 	            proxy_pass http://127.0.0.1:8080;
@@ -130,7 +137,7 @@
 	    STATIC_ROOT = BASE_DIR / 'static_backend'
 
 - активировать виртуальное окружение проекта, перейти в директорию с файлом _manage.py_ и выполнить команду `python manage.py collectstatic`
-- в директории_<имя_проекта>/backend/_ будет создана директория _static_backend/_ 
+- в директории cd ~/infra_sprint1/backend/ будет создcdана директория _static_backend/_ 
 - Скопировать директорию _static_backend/_ в директорию _/var/www/<имя_проекта>/_
 
 ## Добавление доменного имени в настройки Django
@@ -142,7 +149,7 @@
 
 		server {
 		...
-		     server_name 158.160.72.135 romainkashichkin.ddns.net;
+		     server_name 158.160.28.33 alex86kittygram.hopto.org;
 		...
 		}
 - Проверить конфигурацию `sudo nginx -t` и перезагрузить её командой `sudo systemctl reload nginx`, чтобы изменения вступили в силу.
