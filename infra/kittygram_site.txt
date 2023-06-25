@@ -1,5 +1,5 @@
-IP: 158.160.28.33;
-name_taski: https://alex86taski.hopto.org;
-name_kittygram: https://alex86kittygram.hopto.org;
+IP: 158.160.72.135;
+name_taski: https://romainkashichkin.sytes.net;
+name_kittygram: https://romainkashichkin.ddns.net;
 login: admin;
 password: admin;
