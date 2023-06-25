@@ -42,8 +42,8 @@
 - `touch .env`
 - `nano .env` вставить SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
 - `cd ~/infra_sprint1/backend`
-- выполнить миграции `python manage.py migrate`
-- создать суперюзера `python manage.py createsuperuser`
+- выполнить миграции `python3 manage.py migrate`
+- создать суперюзера `python3 manage.py createsuperuser`
 - отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alex86kittygram.hopto.org']
 
 ## Запуск frontend проекта на сервере

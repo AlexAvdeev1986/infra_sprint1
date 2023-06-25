@@ -1,5 +1,5 @@
 server {
-    server_name 158.160.28.33 alex86taski.hopto.org;
+    server_name 158.160.28.33 valerii-taski.ddns.net;
 
     location /api/ {
         proxy_pass http://127.0.0.1:8000;
@@ -17,27 +17,27 @@ server {
 
 
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/alex86taski.hopto.org/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/alex86taski.hopto.org/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/valerii-taski.ddns.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/valerii-taski.ddns.net/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
 }
 server {
-    if ($host = alex86taski.hopto.org) {
+    if ($host = valerii-taski.ddns.net) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
 
     listen 80;
-    server_name 158.160.28.33 alex86taski.hopto.org;
+    server_name 158.160.28.33 valerii-taski.ddns.net;
     return 404; # managed by Certbot
 
 
 }
 server {
-    server_name 158.160.28.33 alex86kittygram.hopto.org;
+    server_name 158.160.28.33 edikkingsta.ddns.net;
 
     location /media/ {
         root /var/www/kittygram;
@@ -59,22 +59,22 @@ server {
 
 
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/alex86kittygram.hopto.org/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/alex86kittygram.hopto.org/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/edikkingsta.ddns.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/edikkingsta.ddns.net/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
 }
 
 server {
-    if ($host = alex86kittygram.hopto.org) {
+    if ($host = edikkingsta.ddns.net) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
 
     listen 80;
-    server_name 158.160.28.33 alex86kittygram.hopto.org;
+    server_name 158.160.28.33 edikkingsta.ddns.net;
     return 404; # managed by Certbot
 
 
