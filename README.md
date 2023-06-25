@@ -44,13 +44,13 @@
 - `cd ~/infra_sprint1/backend`
 - выполнить миграции `python3 manage.py migrate`
 - создать суперюзера `python3 manage.py createsuperuser`
-- отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alex86kittygram.hopto.org']
+- отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'edikkingsta.ddns.net']
 
 ## Запуск frontend проекта на сервере
 - установить на сервер `Node.js`   командами
 `curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\`
 `sudo apt-get install -y nodejs`
-- установить зависимости frontend приложения. Из директории `cd ~/infra_sprint1/frontend/` выполнить команду: 'sudo apt install npm' `npm i` `npm audit' 'npm audit fix --force`
+- установить зависимости frontend приложения. Из директории `cd ~/infra_sprint1/frontend/` выполнить команду: `sudo apt install npm` `npm i` `npm audit' 'npm audit fix --force`
 
 ## Установка и запуск Gunicorn
 - при активированном виртуальном окружении проекта установить пакет gunicorn `pip install gunicorn==20.1.0`
@@ -90,7 +90,7 @@
         server {
     
 	        listen 80;
-	        server_name 158.160.28.33 alex86kittygram.hopto.org;
+	        server_name 158.160.28.33 edikkingsta.ddns.net;
         
 	        location / {
             root   /var/www/kittygram;
@@ -107,7 +107,7 @@
 	    server {
     
 	        listen 80;
-	        server_name 158.160.28.33 alex86kittygram.hopto.org;
+	        server_name 158.160.28.33 edikkingsta.ddns.net;
     
 	        location /api/ {
 	            proxy_pass http://127.0.0.1:8080;
@@ -131,7 +131,7 @@
 	    sudo systemctl reload nginx
 
 	### собрать и настроить статику для backend-приложения.
-- в файле _settings.py_ прописать настройки 
+- в файле `nano settings.py` прописать настройки 
 	
 
 	    STATIC_URL = 'static_backend'
@@ -154,7 +154,7 @@
 
 		server {
 		...
-		     server_name 158.160.28.33 alex86kittygram.hopto.org;
+		     server_name 158.160.28.33 edikkingsta.ddns.net;
 		...
 		}
 - Проверить конфигурацию `sudo nginx -t` и перезагрузить её командой `sudo systemctl reload nginx`, чтобы изменения вступили в силу.
