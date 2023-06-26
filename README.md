@@ -44,7 +44,9 @@
 - `cd ~/infra_sprint1/backend`
 - выполнить миграции `python3 manage.py migrate`
 - создать суперюзера `python3 manage.py createsuperuser`
-- отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'edikkingsta.ddns.net']
+- отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . 
+
+ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alextaski.ddns.net']
 
 ## Запуск frontend проекта на сервере
 - установить на сервер `Node.js`   командами
@@ -90,7 +92,7 @@
         server {
     
 	        listen 80;
-	        server_name 158.160.28.33 edikkingsta.ddns.net;
+	        server_name 158.160.28.33 alexkittygram.ddns.net;
         
 	        location / {
             root   /var/www/kittygram;
@@ -107,7 +109,7 @@
 	    server {
     
 	        listen 80;
-	        server_name 158.160.28.33 edikkingsta.ddns.net;
+	        server_name 158.160.28.33 alexkittygram.ddns.net;
     
 	        location /api/ {
 	            proxy_pass http://127.0.0.1:8080;
@@ -154,7 +156,7 @@
 
 		server {
 		...
-		     server_name 158.160.28.33 edikkingsta.ddns.net;
+		     server_name 158.160.28.33 alexkittygram.ddns.net;
 		...
 		}
 - Проверить конфигурацию `sudo nginx -t` и перезагрузить её командой `sudo systemctl reload nginx`, чтобы изменения вступили в силу.
