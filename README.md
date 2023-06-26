@@ -28,7 +28,7 @@
 - если Git не установлен - установить командой `sudo apt install git`
 - находясь на сервере сгенерировать пару SSH-ключей командой `ssh-keygen`
 - сохранить открытый ключ в вашем аккаунте на GitHub. Для этого вывести ключ в терминал командой `cat .ssh/id_rsa.pub`. Скопировать ключ от символов ssh-rsa, включительно, и до конца. Добавить это ключ к вашему аккаунту на GitHub.
-- `ssh -i /home/ea703557/Загрузки/555/yc-ea703557 yc-user@158.160.28.33`
+- `ssh -i /home/ea703557/Загрузки/555/yc-ea703557 yc-user@158.160.72.135`
 -
 - клонировать проект с GitHub на сервер: `git clone https://github.com/AlexAvdeev1986/infra_sprint1.git`
 
@@ -40,13 +40,15 @@
 - установить зависимости `pip install -r requirements.txt`
 - `cd backend/kittygram_backend/`
 - `touch .env`
-- `nano .env` вставить SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+- `nano .env` вставить 
+- SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+- ALLOWED_HOSTS = ['158.160.72.135', '127.0.0.1', 'localhost', 'romainkashichkin.ddns.net']
+- DEBUG = False
 - `cd ~/infra_sprint1/backend`
 - выполнить миграции `python3 manage.py migrate`
 - создать суперюзера `python3 manage.py createsuperuser`
 - отредактировать settings.py на сервере: в список ALLOWED_HOSTS добавить внешний IP-адрес вашего сервера и адреса `127.0.0.1` и `localhost` . 
 
-ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alextaski.ddns.net']
 
 ## Запуск frontend проекта на сервере
 - установить на сервер `Node.js`   командами
@@ -92,7 +94,7 @@ ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alextaski.ddns.net'
         server {
     
 	        listen 80;
-	        server_name 158.160.28.33 alexkittygram.ddns.net;
+	        server_name 158.160.72.135 romainkashichkin.ddns.net;
         
 	        location / {
             root   /var/www/kittygram;
@@ -109,7 +111,7 @@ ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alextaski.ddns.net'
 	    server {
     
 	        listen 80;
-	        server_name 158.160.28.33 alexkittygram.ddns.net;
+	        server_name 158.160.72.135 romainkashichkin.ddns.net;
     
 	        location /api/ {
 	            proxy_pass http://127.0.0.1:8080;
@@ -156,7 +158,7 @@ ALLOWED_HOSTS = ['158.160.28.33', '127.0.0.1', 'localhost', 'alextaski.ddns.net'
 
 		server {
 		...
-		     server_name 158.160.28.33 alexkittygram.ddns.net;
+		     server_name 158.160.72.135 romainkashichkin.ddns.net;
 		...
 		}
 - Проверить конфигурацию `sudo nginx -t` и перезагрузить её командой `sudo systemctl reload nginx`, чтобы изменения вступили в силу.
